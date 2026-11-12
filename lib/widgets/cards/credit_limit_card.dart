@@ -155,7 +155,7 @@ class CreditLimitCard extends StatelessWidget {
                         ],
                       ),
 
-                      // Premium Branding Pill
+                      // Premium Branding Pill with 3D Glossy Logo
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
@@ -163,12 +163,12 @@ class CreditLimitCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: Colors.white.withOpacity(0.15)),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.diamond_outlined, size: 12, color: Color(0xFFFFD700)),
-                            SizedBox(width: 5),
-                            Text(
+                            Image.asset('assets/images/logo.png', width: 16, height: 16),
+                            const SizedBox(width: 6),
+                            const Text(
                               "WELLSLOAN PREMIER",
                               style: TextStyle(
                                 color: Colors.white,

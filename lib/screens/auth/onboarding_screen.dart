@@ -50,6 +50,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/images/logo.png', width: 26, height: 26),
+            const SizedBox(width: 8),
+            const Text(
+              "Wellsloan",
+              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: AppColors.textDark),
+            ),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: _completeOnboarding,

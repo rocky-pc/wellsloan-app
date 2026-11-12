@@ -85,26 +85,24 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               children: [
                 // Premium Emblem
                 Container(
-                  width: 90,
-                  height: 90,
+                  width: 96,
+                  height: 96,
                   decoration: BoxDecoration(
-                    gradient: AppColors.luxuryMidnightGradient,
+                    color: const Color(0xFF0F172A),
                     borderRadius: BorderRadius.circular(28),
                     border: Border.all(color: Colors.white.withOpacity(0.15), width: 1.5),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primary.withOpacity(0.4),
+                        color: const Color(0xFF9333EA).withOpacity(0.35),
                         blurRadius: 30,
                         offset: const Offset(0, 10),
                       ),
                     ],
                   ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.account_balance_rounded,
-                      size: 44,
-                      color: Colors.white,
-                    ),
+                  padding: const EdgeInsets.all(12),
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    fit: BoxFit.contain,
                   ),
                 ),
                 const SizedBox(height: 24),

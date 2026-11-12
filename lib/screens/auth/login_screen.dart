@@ -68,15 +68,21 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16),
               // Brand Logo
               Container(
-                width: 52,
-                height: 52,
+                width: 62,
+                height: 62,
                 decoration: BoxDecoration(
-                  gradient: AppColors.luxuryMidnightGradient,
-                  borderRadius: BorderRadius.circular(16),
+                  color: const Color(0xFF0F172A),
+                  borderRadius: BorderRadius.circular(18),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF9333EA).withOpacity(0.25),
+                      blurRadius: 16,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
                 ),
-                child: const Center(
-                  child: Icon(Icons.account_balance_rounded, color: Colors.white, size: 26),
-                ),
+                padding: const EdgeInsets.all(8),
+                child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
               ),
               const SizedBox(height: 24),
               const Text(
