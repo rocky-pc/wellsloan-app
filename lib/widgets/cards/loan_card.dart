@@ -8,27 +8,31 @@ import '../common/status_badge.dart';
 class LoanCard extends StatelessWidget {
   final LoanModel loan;
   final VoidCallback? onTap;
+  final VoidCallback? onPayPressed;
 
   const LoanCard({
     super.key,
     required this.loan,
     this.onTap,
+    this.onPayPressed,
   });
 
   @override
   Widget build(BuildContext context) {
+    final percentRepaid = (loan.progressRatio * 100).clamp(0, 100).toInt();
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.borderLight, width: 1),
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: AppColors.borderLight.withOpacity(0.8), width: 1.2),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.02),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 14,
+              offset: const Offset(0, 5),
             ),
           ],
         ),
@@ -36,23 +40,31 @@ class LoanCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top Row: Title + Status
+            // Top Row: Icon + Loan Product Name & Tenure + Status Badge
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
                     Container(
-                      width: 38,
-                      height: 38,
+                      width: 42,
+                      height: 42,
                       decoration: BoxDecoration(
-                        color: AppColors.primaryLight,
-                        borderRadius: BorderRadius.circular(12),
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.primaryLight,
+                            AppColors.primary.withOpacity(0.12),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: AppColors.primary.withOpacity(0.15)),
                       ),
                       child: const Icon(
-                        Icons.account_balance_wallet_outlined,
+                        Icons.account_balance_wallet_rounded,
                         color: AppColors.primary,
-                        size: 20,
+                        size: 22,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -62,17 +74,19 @@ class LoanCard extends StatelessWidget {
                         Text(
                           loan.productName,
                           style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 14.5,
+                            fontWeight: FontWeight.w800,
                             color: AppColors.textDark,
+                            letterSpacing: -0.2,
                           ),
                         ),
+                        const SizedBox(height: 2),
                         Text(
-                          "Tenure: ${loan.tenureMonths} Months • ${loan.interestRate}% p.a.",
+                          "Tenure: ${loan.tenureMonths} Mos • ${loan.interestRate}% p.a.",
                           style: const TextStyle(
                             fontSize: 11,
                             color: AppColors.textMuted,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
@@ -82,9 +96,10 @@ class LoanCard extends StatelessWidget {
                 StatusBadge(status: loan.status),
               ],
             ),
+
             const SizedBox(height: 16),
 
-            // Middle: Outstanding Balance vs Principal
+            // Middle: Outstanding Balance vs Sanctioned Amount
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -93,20 +108,22 @@ class LoanCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Outstanding Balance",
+                      "OUTSTANDING BALANCE",
                       style: TextStyle(
-                        fontSize: 11,
+                        fontSize: 10,
                         color: AppColors.textMuted,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.8,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 4),
                     Text(
                       CurrencyFormatter.format(loan.outstandingBalance),
                       style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
                         color: AppColors.textDark,
+                        letterSpacing: -0.4,
                       ),
                     ),
                   ],
@@ -115,19 +132,20 @@ class LoanCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     const Text(
-                      "Sanctioned Amount",
+                      "SANCTIONED",
                       style: TextStyle(
-                        fontSize: 11,
+                        fontSize: 10,
                         color: AppColors.textMuted,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.8,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 4),
                     Text(
                       CurrencyFormatter.format(loan.principalAmount),
                       style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 13.5,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.textMuted,
                       ),
                     ),
@@ -135,9 +153,28 @@ class LoanCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
 
-            // Progress bar
+            const SizedBox(height: 14),
+
+            // Repayment Progress Bar with Percentage Tag
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Repayment Progress",
+                  style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600, color: AppColors.textMuted),
+                ),
+                Text(
+                  "$percentRepaid% Cleared",
+                  style: const TextStyle(
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.emeraldDark,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
               child: LinearProgressIndicator(
@@ -147,44 +184,67 @@ class LoanCard extends StatelessWidget {
                 minHeight: 6,
               ),
             ),
-            const SizedBox(height: 14),
 
-            // Bottom bar: Next EMI due
-            if (loan.nextPaymentAmount > 0)
+            // Bottom bar: Next EMI due & Quick Pay Button
+            if (loan.nextPaymentAmount > 0) ...[
+              const SizedBox(height: 14),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceLightSubtle,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: AppColors.borderLight.withOpacity(0.6)),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.calendar_today_rounded, size: 13, color: AppColors.primary),
-                        const SizedBox(width: 6),
-                        Text(
-                          "Next EMI: ${DateHelper.formatFriendly(loan.nextPaymentDueDate)}",
-                          style: const TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textDark,
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryLight,
+                            borderRadius: BorderRadius.circular(8),
                           ),
+                          child: const Icon(Icons.event_note_rounded, size: 14, color: AppColors.primary),
+                        ),
+                        const SizedBox(width: 8),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "NEXT EMI DUE",
+                              style: TextStyle(
+                                fontSize: 9.5,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.textMuted,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                            Text(
+                              DateHelper.formatFriendly(loan.nextPaymentDueDate),
+                              style: const TextStyle(
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.textDark,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                     Text(
                       CurrencyFormatter.format(loan.nextPaymentAmount),
                       style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w900,
                         color: AppColors.primaryDark,
                       ),
                     ),
                   ],
                 ),
               ),
+            ],
           ],
         ),
       ),

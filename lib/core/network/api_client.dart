@@ -108,7 +108,7 @@ class ApiClient {
     required Map<String, dynamic> extraFields,
   }) async {
     try {
-      final fileName = file.path.split('/').last;
+      final fileName = file.path.split(RegExp(r'[/\\]')).last;
       final formData = FormData.fromMap({
         ...extraFields,
         fileKey: await MultipartFile.fromFile(file.path, filename: fileName),
@@ -117,9 +117,6 @@ class ApiClient {
       return await _dio.post<T>(
         path,
         data: formData,
-        options: Options(
-          headers: {'Content-Type': 'multipart/form-data'},
-        ),
       );
     } on DioException catch (e) {
       if (e.error is ApiException) throw e.error as ApiException;

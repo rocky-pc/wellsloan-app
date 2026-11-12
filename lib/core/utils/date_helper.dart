@@ -12,6 +12,12 @@ class DateHelper {
     }
   }
 
+  /// Formats DateTime object to friendly readable format
+  static String formatDateTime(DateTime? dt) {
+    if (dt == null) return "N/A";
+    return DateFormat('dd MMM, yyyy').format(dt);
+  }
+
   /// Calculates days remaining until due date
   static int daysUntil(String? isoString) {
     if (isoString == null || isoString.isEmpty) return 0;

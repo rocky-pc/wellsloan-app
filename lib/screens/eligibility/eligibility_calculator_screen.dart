@@ -14,7 +14,6 @@ class EligibilityCalculatorScreen extends StatefulWidget {
 class _EligibilityCalculatorScreenState extends State<EligibilityCalculatorScreen> {
   double _monthlyIncome = 50000;
   double _existingEmi = 5000;
-  String _employmentType = "Salaried";
 
   // Calculations:
   // FOIR = (Existing EMIs + New EMI) / Monthly Income
@@ -28,11 +27,6 @@ class _EligibilityCalculatorScreenState extends State<EligibilityCalculatorScree
   // Estimated loan amount based on 24 months at 12.5% p.a.
   double get _sanctionableLimit {
     if (_maxAllowedEmi <= 0) return 0;
-    // P = EMI * ((1+r)^n - 1) / (r * (1+r)^n)
-    const annualRate = 12.5;
-    final r = annualRate / 12 / 100;
-    const n = 24;
-    final p = _maxAllowedEmi * (1 - (1 / (1 + r))) ; // approximation
     final est = _maxAllowedEmi * 20.8;
     return (est / 1000).round() * 1000.0;
   }

@@ -100,7 +100,5 @@ flutter run
 ```
 
 ### Backend Connection
-The app connects by default to the production Hostinger backend:
-- `https://wellsee.co.in/wellsloan/public/api`
-
-To switch to a local emulator, navigate to **Profile -> API Endpoint Switcher** or select `Local Android Emulator (10.0.2.2:8000)`.
+The app connects by default to the production Wellsloan cloud backend:
+- API Base URL: `https://wellsloan.wellsee.co.in/api`

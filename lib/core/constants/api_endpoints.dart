@@ -1,14 +1,12 @@
 class ApiEndpoints {
-  // Base URLs
   // Production Hostinger API URL
-  static const String defaultProdBaseUrl = "https://wellsee.co.in/wellsloan/public/api";
+  static const String defaultProdBaseUrl = "https://wellsloan.wellsee.co.in/api";
   
-  // Local Android Emulator: 10.0.2.2:8000/api
-  // Local iOS Simulator: 127.0.0.1:8000/api
+  // Local Development URLs
   static const String localAndroidBaseUrl = "http://10.0.2.2:8000/api";
   static const String localIosBaseUrl = "http://127.0.0.1:8000/api";
 
-  // Active Base URL (configurable at runtime in settings)
+  // Active Base URL
   static String activeBaseUrl = defaultProdBaseUrl;
 
   // Auth Routes
@@ -34,4 +32,9 @@ class ApiEndpoints {
   static const String eligibilityCheck = "/eligibility/check";
   static const String aiAdvisor = "/ai/advisor";
   static const String aiKycScan = "/ai/kyc-scan";
+
+  // Customer In-App Notifications
+  static const String notifications = "/notifications";
+  static String markNotificationRead(int id) => "/notifications/$id/read";
+  static const String markAllNotificationsRead = "/notifications/read-all";
 }

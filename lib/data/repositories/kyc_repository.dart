@@ -40,7 +40,9 @@ class KycRepository {
       },
     );
 
-    return KycDocumentModel.fromJson(response.data['document']);
+    final responseData = response.data;
+    final docData = responseData is Map ? (responseData['document'] ?? responseData['data'] ?? responseData) : {};
+    return KycDocumentModel.fromJson(Map<String, dynamic>.from(docData));
   }
 
   Future<Map<String, dynamic>> scanDocumentAi({

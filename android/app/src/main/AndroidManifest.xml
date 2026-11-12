@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.in.wellsee.wellsloan_app">
+    package="co.in.wellsee.wellsloan">
 
     <!-- Permissions for Networking, KYC Camera & File Picker, Biometrics -->
     <uses-permission android:name="android.permission.INTERNET" />

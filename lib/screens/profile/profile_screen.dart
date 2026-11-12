@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/constants/api_endpoints.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/utils/date_helper.dart';
 import '../../providers/auth_provider.dart';
@@ -41,53 +40,6 @@ class ProfileScreen extends StatelessWidget {
             child: const Text("Sign Out"),
           ),
         ],
-      ),
-    );
-  }
-
-  void _showApiSwitcher(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Backend API Environment",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.textDark),
-            ),
-            const SizedBox(height: 12),
-            ListTile(
-              title: const Text("Production Hostinger API"),
-              subtitle: Text(ApiEndpoints.defaultProdBaseUrl),
-              leading: const Icon(Icons.cloud_done_rounded, color: AppColors.emerald),
-              onTap: () {
-                ApiEndpoints.activeBaseUrl = ApiEndpoints.defaultProdBaseUrl;
-                Navigator.of(ctx).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Switched to Production Hostinger API")),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text("Local Android Emulator (10.0.2.2:8000)"),
-              subtitle: Text(ApiEndpoints.localAndroidBaseUrl),
-              leading: const Icon(Icons.developer_mode_rounded, color: AppColors.primary),
-              onTap: () {
-                ApiEndpoints.activeBaseUrl = ApiEndpoints.localAndroidBaseUrl;
-                Navigator.of(ctx).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Switched to Local Android Emulator API")),
-                );
-              },
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -211,7 +163,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Settings Group 2: Preferences & Admin
+            // Settings Group 2: Customer Preferences & Security
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -231,24 +183,32 @@ class ProfileScreen extends StatelessWidget {
                   _buildSettingTile(
                     icon: Icons.notifications_none_rounded,
                     iconColor: AppColors.amberDark,
-                    title: "EMI Reminders & Notifications",
-                    subtitle: "WhatsApp & SMS notifications active",
+                    title: "Push Notifications & Alerts",
+                    subtitle: "Instant EMI alerts, loan disbursals & offers",
                     onTap: () {},
                   ),
                   const Divider(height: 1),
                   _buildSettingTile(
-                    icon: Icons.api_rounded,
+                    icon: Icons.security_rounded,
                     iconColor: AppColors.primary,
-                    title: "API Endpoint Switcher",
-                    subtitle: "Configured: ${ApiEndpoints.activeBaseUrl}",
-                    onTap: () => _showApiSwitcher(context),
+                    title: "Security & Privacy Policy",
+                    subtitle: "256-bit SSL encryption • RBI compliant",
+                    onTap: () {},
                   ),
                   const Divider(height: 1),
                   _buildSettingTile(
                     icon: Icons.support_agent_rounded,
                     iconColor: AppColors.emerald,
-                    title: "24/7 Wellsloan Support",
+                    title: "24/7 Customer Support",
                     subtitle: "support@wellsee.co.in",
+                    onTap: () {},
+                  ),
+                  const Divider(height: 1),
+                  _buildSettingTile(
+                    icon: Icons.info_outline_rounded,
+                    iconColor: AppColors.textMuted,
+                    title: "App Version",
+                    subtitle: "Wellsloan Customer App v1.0.0 (Production)",
                     onTap: () {},
                   ),
                 ],
