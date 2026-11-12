@@ -1,6 +1,7 @@
 class ApiEndpoints {
-  // Production Hostinger API URL
-  static const String defaultProdBaseUrl = "https://wellsloan.wellsee.co.in/api";
+  // Production Hostinger Direct API URL (active on LiteSpeed)
+  static const String defaultProdBaseUrl = "https://wellsee.co.in/wellsloan/public/api";
+  static const String subdomainProdBaseUrl = "https://wellsloan.wellsee.co.in/api";
   
   // Local Development URLs
   static const String localAndroidBaseUrl = "http://10.0.2.2:8000/api";
